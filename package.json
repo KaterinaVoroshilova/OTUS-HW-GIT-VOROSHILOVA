@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/main.js",
     "lint:ci": "eslint .",
-      "lint": "eslint . --fix"
+    "lint": "eslint . --fix"
   },
   "author": "Damir Rysaev <freepad@ya.ru>",
   "keywords": [],
