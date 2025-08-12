@@ -1,96 +1,73 @@
-import { faker } from '@faker-js/faker'
+import configBookstore from '../framework/config/configBookstore'
+import { generateUncorrectUserCredentials, generateUserCredentials } from '../framework/fixtures/userFixture'
+import AuthService from '../framework/services/AuthService'
+import UserService from '../framework/services/UserService'
 
 test(`User creation with error, login already in use`, async () => {
-  const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({
-      userName: `user`,
-      password: `Pass!123`
-    })
-  })
-  const responseBody = await response.json()
-  expect(response.status).toEqual(406)
-  expect(responseBody).toEqual({
-    code: `1204`,
-    message: `User exists!`
-  })
+  const response = await UserService.create(configBookstore.userName, configBookstore.password)
+  expect(response).toHaveProperty(`status`, 406)
+  expect(response.data.code).toBe(`1204`)
+  expect(response.data.message).toBe(`User exists!`)
 })
 
 test(`User creation with error, password does not fit`, async () => {
-  const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({
-      userName: faker.internet.username(),
-      password: `pass`
-    })
-  })
-  const responseBody = await response.json()
-  expect(response.status).toEqual(400)
-  expect(responseBody).toEqual({
-    code: `1300`,
-    message: `Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.`
-  })
+  const newUser = generateUncorrectUserCredentials()
+  const response = await UserService.create(newUser.userName, newUser.password)
+  expect(response).toHaveProperty(`status`, 400)
+  expect(response.data.code).toBe(`1300`)
+  expect(response.data.message).toBe(
+    `Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.`
+  )
 })
 
 test(`User creation successful`, async () => {
-  const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({
-      userName: faker.internet.username(),
-      password: `Password!123`
-    })
-  })
-  expect(response.status).toEqual(201)
+  const newUser = generateUserCredentials()
+  const response = await UserService.create(newUser.userName, newUser.password)
+  expect(response).toHaveProperty(`status`, 201)
 })
 
 test(`Token generation with error`, async () => {
-  const response = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({
-      userName: `user`,
-      password: `pass`
-    })
-  })
-  const responseBody = await response.json()
-  expect(response.status).toEqual(200)
-  expect(responseBody).toEqual({
-    token: null,
-    expires: null,
-    status: 'Failed',
-    result: 'User authorization failed.'
-  })
+  const response = await AuthService.generateToken(configBookstore.userName, configBookstore.uncorrectPass)
+  expect(response).toHaveProperty(`status`, 200)
+  expect(response.data.status).toBe(`Failed`)
+  expect(response.data.result).toBe('User authorization failed.')
 })
 
 test(`Token generation successfull`, async () => {
-  const response = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({
-      userName: `user`,
-      password: `Pass!123`
-    })
-  })
-  const responseBody = await response.json()
-  expect(response.status).toEqual(200)
-  expect(responseBody.status).toEqual(`Success`)
-  expect(responseBody.result).toEqual(`User authorized successfully.`)
+  const response = await AuthService.generateToken(configBookstore.userName, configBookstore.password)
+  expect(response).toHaveProperty(`status`, 200)
+  expect(response.data.status).toBe(`Success`)
+  expect(response.data.result).toBe(`User authorized successfully.`)
+})
+
+test(`Authorized successfull`, async () => {
+  const response = await AuthService.authorized(configBookstore.userName, configBookstore.password)
+  expect(response).toHaveProperty(`status`, 200)
+  expect(response.data).toBe(true)
+})
+
+test(`Information about user`, async () => {
+  const newUser = generateUserCredentials()
+  const responseCreate = await UserService.create(newUser.userName, newUser.password)
+  const responseGenerate = await AuthService.generateToken(newUser.userName, newUser.password)
+  await AuthService.authorized(newUser.userName, newUser.password)
+  const userId = responseCreate.data.userID
+  const token = responseGenerate.data.token
+
+  const response = await UserService.get(userId, token)
+
+  expect(response).toHaveProperty(`status`, 200)
+})
+
+test(`Remove user`, async () => {
+  const newUser = generateUserCredentials()
+  const responseCreate = await UserService.create(newUser.userName, newUser.password)
+  const responseGenerate = await AuthService.generateToken(newUser.userName, newUser.password)
+  await AuthService.authorized(newUser.userName, newUser.password)
+  const userId = responseCreate.data.userID
+  const token = responseGenerate.data.token
+
+  const response = await UserService.remove(userId, token)
+
+  expect(response).toHaveProperty(`status`, 204)
 })

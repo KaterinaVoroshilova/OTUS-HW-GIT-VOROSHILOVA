@@ -56,7 +56,7 @@ const scores = {
 let sum = 0
 
 export const getScore = (scores = {}) => {
-  for (let key in scores){
+  for (let key in scores) {
     sum = sum + scores[key]
   }
   return sum
