@@ -42,19 +42,6 @@ const login = async (userName, password) => {
   }
 }
 
-/*const generateTokenCached = cached(generateToken)
-
-const getTokenFromCache = async ({ userName, password }: UserCredentials) => {
-  const response = await generateTokenCached({
-    userName,
-    password
-  })
-  if (typeof response.data.token !== 'string') {
-    throw new Error('No token in response')
-  }
-  return response.data.token
-}*/
-
 export default {
   authorized,
   login,
