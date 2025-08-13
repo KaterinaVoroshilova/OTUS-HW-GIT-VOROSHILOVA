@@ -48,15 +48,15 @@ const addListOfBooks = async (userId, collectionOfIsbns, token) => {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json'
     },
-    body: {
+    body: JSON.stringify({
       userId,
       collectionOfIsbns
-    }
+    })
   })
   return {
     headers: response.headers,
     status: response.status,
-    data: response.data
+    data: await response.json()
   }
 }
 
@@ -74,7 +74,7 @@ const removeBooks = async (userId, isbn, token) => {
   return {
     headers: response.headers,
     status: response.status,
-    data: response.data
+    data: response.body
   }
 }
 
