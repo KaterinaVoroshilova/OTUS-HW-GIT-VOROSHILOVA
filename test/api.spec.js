@@ -1,3 +1,4 @@
+import { exp } from 'prelude-ls'
 import configBookstore from '../framework/config/configBookstore'
 import { generateUncorrectUserCredentials, generateUserCredentials } from '../framework/fixtures/userFixture'
 import AuthService from '../framework/services/AuthService'
@@ -57,6 +58,8 @@ test(`Information about user`, async () => {
   const response = await UserService.get(userId, token)
 
   expect(response).toHaveProperty(`status`, 200)
+  expect(response.data).toHaveProperty(`userId`, userId)
+  expect(response.data).toHaveProperty(`username`, newUser.userName)
 })
 
 test(`Remove user`, async () => {

@@ -11,7 +11,7 @@ const getUser = async (userId, token) => {
   return {
     headers: response.headers,
     status: response.status,
-    data: response.data
+    data: await response.json()
   }
 }
 
