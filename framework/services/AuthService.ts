@@ -1,6 +1,6 @@
-import config from '../config/configBookstore'
+import config from '../config/configBookstore.js'
 
-const generateToken = async (userName, password) => {
+const generateToken = async (userName: string, password: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/GenerateToken`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -14,7 +14,7 @@ const generateToken = async (userName, password) => {
   }
 }
 
-const authorized = async (userName, password) => {
+const authorized = async (userName: string, password: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/Authorized`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -28,7 +28,7 @@ const authorized = async (userName, password) => {
   }
 }
 
-const login = async (userName, password) => {
+const login = async (userName: string, password: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/Login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

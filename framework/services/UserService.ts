@@ -1,6 +1,6 @@
-import config from '../config/configBookstore'
+import config from '../config/configBookstore.js'
 
-const getUser = async (userId, token) => {
+const getUser = async (userId: string, token: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/User/${userId}`, {
     method: 'GET',
     headers: {
@@ -15,7 +15,7 @@ const getUser = async (userId, token) => {
   }
 }
 
-const createUser = async (userName, password) => {
+const createUser = async (userName: string, password: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/User`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -29,7 +29,7 @@ const createUser = async (userName, password) => {
   }
 }
 
-const removeUser = async (userId, token) => {
+const removeUser = async (userId: string, token: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/User/${userId}`, {
     method: 'DELETE',
     headers: {
@@ -40,6 +40,7 @@ const removeUser = async (userId, token) => {
   return {
     headers: response.headers,
     status: response.status,
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type 'Response'.
     data: response.data
   }
 }

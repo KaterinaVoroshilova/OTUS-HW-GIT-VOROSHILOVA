@@ -1,4 +1,4 @@
-import config from '../config/configBookstore'
+import config from '../config/configBookstore.js'
 
 const getBooks = async () => {
   const response = await fetch(`${config.baseURL}/BookStore/v1/Books`, {
@@ -8,10 +8,11 @@ const getBooks = async () => {
   return {
     headers: response.headers,
     status: response.status,
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type 'Response'.
     data: response.data
   }
 }
-const getBook = async isbn => {
+const getBook = async (isbn: string) => {
   const response = await fetch(`${config.baseURL}/BookStore/v1/Book?ISBN=${isbn}`, {
     method: 'GET',
     headers: { Accept: 'application/json' }
@@ -22,7 +23,7 @@ const getBook = async isbn => {
     data: await response.json()
   }
 }
-const replaceBook = async (userId, fromIsbn, isbn, token) => {
+const replaceBook = async (userId: string, fromIsbn: string, isbn: string, token: string) => {
   const response = await fetch(`${config.baseURL}/BookStore/v1/Books/${fromIsbn}`, {
     method: `PUT`,
     headers: {
@@ -40,7 +41,7 @@ const replaceBook = async (userId, fromIsbn, isbn, token) => {
   }
 }
 
-const addListOfBooks = async (userId, collectionOfIsbns, token) => {
+const addListOfBooks = async (userId: string, collectionOfIsbns: string [], token: string) => {
   const response = await fetch(`${config.baseURL}/BookStore/v1/Books`, {
     method: `POST`,
     headers: {
@@ -60,7 +61,7 @@ const addListOfBooks = async (userId, collectionOfIsbns, token) => {
   }
 }
 
-const removeBooks = async (userId, isbn, token) => {
+const removeBooks = async (userId: string, isbn: string, token: string) => {
   const response = await await fetch(`${config.baseURL}/BookStore/v1/Books?UserId=${userId}`, {
     method: `DELETE`,
     headers: {

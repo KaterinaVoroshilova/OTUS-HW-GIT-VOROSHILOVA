@@ -36,7 +36,6 @@
     "jiti": "^2.5.1",
     "npm-run-all2": "^7.0.2",
     "prettier": "3.6.2",
-    "ts-migrate": "^0.1.35",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.40.0"
   },
