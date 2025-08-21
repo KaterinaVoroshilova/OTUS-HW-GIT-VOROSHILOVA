@@ -1,4 +1,4 @@
-import config from '../config/configBookstore.js'
+import config from '../config/configBookstore.ts'
 
 const getBooks = async () => {
   const response = await fetch(`${config.baseURL}/BookStore/v1/Books`, {

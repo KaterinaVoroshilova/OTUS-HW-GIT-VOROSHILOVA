@@ -1,4 +1,4 @@
-import { fullTrim, getTotal, nameIsValid } from '../src/app.js'
+import { fullTrim, getTotal, nameIsValid } from '../src/app.ts'
 
 // @ts-expect-error TS(2593): Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('nameIsValid function', () => {
@@ -33,7 +33,7 @@ test.each`
 `('returns $expected when $text', ({
   text,
   expected
-}: any) => {
+}: string) => {
   // @ts-expect-error TS(2552): Cannot find name 'expect'. Did you mean 'expected'... Remove this comment to see the full error message
   expect(fullTrim(text)).toEqual(expected)
 })

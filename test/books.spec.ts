@@ -1,10 +1,10 @@
-import AuthService from '../framework/services/AuthService.js'
-import UserService from '../framework/services/UserService.js'
-import BookService from '../framework/services/BookService.js'
+import AuthService from '../framework/services/AuthService.ts'
+import UserService from '../framework/services/UserService.ts'
+import BookService from '../framework/services/BookService.ts'
 // @ts-expect-error TS(2732): Cannot find module '../framework/fixtures/Books.js... Remove this comment to see the full error message
 import { books } from '../framework/fixtures/Books.json'
 //import configBookstore from '../framework/config/configBookstore'
-import { generateUserCredentials } from '../framework/fixtures/userFixture.js'
+import { generateUserCredentials } from '../framework/fixtures/userFixture.ts'
 
 // @ts-expect-error TS(2593): Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
 test(`Add book`, async () => {
@@ -15,9 +15,11 @@ test(`Add book`, async () => {
   const userId = responseCreate.data.userID
   const token = responseGenerate.data.token
   const [book1] = books
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   const isbn1 = book1.isbn
   const collectionOfIsbns = [{ isbn: isbn1 }]
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   const responseAddListOfBooks = await BookService.addList(userId, collectionOfIsbns, token)
   // @ts-expect-error TS(2304): Cannot find name 'expect'.
@@ -33,11 +35,14 @@ test(`Replace book`, async () => {
   const userId = responseCreate.data.userID
   const token = responseGenerate.data.token
   const [book1, book2] = books
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   const isbn1 = book1.isbn
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   const isbn2 = book2.isbn
   const collectionOfIsbns = [{ isbn: isbn1 }]
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   await BookService.addList(userId, collectionOfIsbns, token)
   const responseReplaceBook = await BookService.replace(userId, isbn1, isbn2, token)
@@ -52,6 +57,7 @@ test(`Replace book`, async () => {
 // @ts-expect-error TS(2593): Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
 test(`Get information about book`, async () => {
   const [book1] = books
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   const isbn1 = book1.isbn
   const responseGetBook = await BookService.getBook(isbn1)
@@ -70,9 +76,11 @@ test(`Delete book`, async () => {
   const userId = responseCreate.data.userID
   const token = responseGenerate.data.token
   const [book1] = books
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   const isbn1 = book1.isbn
   const collectionOfIsbns = [{ isbn: isbn1 }]
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
   // @ts-expect-error 
   await BookService.addList(userId, collectionOfIsbns, token)
   const responseRemove = await BookService.removeBooks(userId, isbn1, token)

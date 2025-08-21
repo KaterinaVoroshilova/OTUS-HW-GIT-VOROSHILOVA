@@ -1,7 +1,7 @@
-import configBookstore from '../framework/config/configBookstore.js'
-import { generateUncorrectUserCredentials, generateUserCredentials } from '../framework/fixtures/userFixture.js'
-import AuthService from '../framework/services/AuthService.js'
-import UserService from '../framework/services/UserService.js'
+import configBookstore from '../framework/config/configBookstore.ts'
+import { generateUncorrectUserCredentials, generateUserCredentials } from '../framework/fixtures/userFixture.ts'
+import AuthService from '../framework/services/AuthService.ts'
+import UserService from '../framework/services/UserService.ts'
 
 // @ts-expect-error TS(2593): Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
 test(`User creation with error, login already in use`, async () => {

@@ -1,4 +1,4 @@
-import config from '../config/configBookstore.js'
+import config from '../config/configBookstore.ts'
 
 const getUser = async (userId: string, token: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/User/${userId}`, {

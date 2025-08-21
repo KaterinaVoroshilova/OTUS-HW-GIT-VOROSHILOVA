@@ -1,4 +1,4 @@
-import config from '../config/configBookstore.js'
+import config from '../config/configBookstore.ts'
 
 const generateToken = async (userName: string, password: string) => {
   const response = await fetch(`${config.baseURL}/Account/v1/GenerateToken`, {
