@@ -33,7 +33,8 @@ test.each`
 `('returns $expected when $text', ({
   text,
   expected
-}: string) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: any) => {
   // @ts-expect-error TS(2552): Cannot find name 'expect'. Did you mean 'expected'... Remove this comment to see the full error message
   expect(fullTrim(text)).toEqual(expected)
 })
