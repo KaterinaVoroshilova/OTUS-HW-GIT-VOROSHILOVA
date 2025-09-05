@@ -22,7 +22,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: 'reports/test-report'
+        path: 'reports/html-report'
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
