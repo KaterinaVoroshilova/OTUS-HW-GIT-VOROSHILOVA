@@ -1,6 +1,9 @@
 name: CI Pipeline
 on: [push, pull_request]
 
+permissions:
+      id-token: write
+
 jobs:
   test:
     environment:
