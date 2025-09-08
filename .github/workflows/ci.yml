@@ -21,13 +21,17 @@ jobs:
         node-version: 22.17.0
         cache: 'npm'
     - run: npm ci
+    - run: npm lint
     - run: npm test
+    - run: npm allure:history
+    - run: npm allure:ci  
+    - run: npm allure:ci:show  
     - name: Setup Pages
       uses: actions/configure-pages@v4
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: 'reports/html-report'
+        path: 'reports/allure-report'
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
