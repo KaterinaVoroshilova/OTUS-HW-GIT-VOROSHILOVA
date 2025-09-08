@@ -24,8 +24,7 @@ jobs:
     - run: npm run lint:ci
     - run: npm test
     - run: npm run allure:history  
-    - run: npm run allure:ci  
-    - run: npm run allure:ci:show    
+    - run: npm run allure:ci     
     - name: Setup Pages
       uses: actions/configure-pages@v4
     - name: Upload artifact
