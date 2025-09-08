@@ -21,11 +21,11 @@ jobs:
         node-version: 22.17.0
         cache: 'npm'
     - run: npm ci
-    - run: npm lint
+    - run: npm run lint:ci
     - run: npm test
-    - run: npm allure:history
-    - run: npm allure:ci  
-    - run: npm allure:ci:show  
+    - run: npm run allure:history  
+    - run: npm run allure:ci  
+    - run: npm run allure:ci:show    
     - name: Setup Pages
       uses: actions/configure-pages@v4
     - name: Upload artifact
