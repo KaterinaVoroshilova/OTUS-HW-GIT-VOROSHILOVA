@@ -1,7 +1,7 @@
 {
   "name": "otus-qajs",
   "version": "1.0.0",
-  "description": "Создано в рамках курса OTUS JavaScript QA Engineer",
+  "description": "Создано в рамках курса OTUS JavaScript QA Engineer.",
   "main": "index.js",
   "type": "module",
   "scripts": {
