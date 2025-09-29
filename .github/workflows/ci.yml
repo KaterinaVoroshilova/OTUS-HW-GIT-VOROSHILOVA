@@ -23,31 +23,45 @@ jobs:
     - run: npm ci
     - run: npm run lint:ci
     - run: npm test
-    - run: npm run allure:history  
-    - run: npm run allure:ci     
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: 'reports/allure-report'
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
-  notification:
-    if: always()
-    needs: [test]
-
+    
+  allure:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      
+    runs-on: ubuntu-latest 
 
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          STATUS="${{ needs.test.result }}"
-          MESSAGE="Сборка ${{ github.run_number }}: $STATUS"
-          curl --request POST \
+    steps: 
+     - uses: actions/checkout@v4
+     - uses: actions/setup-node@v4
+       with:
+         node-version: 22.17.0
+         cache: 'npm'
+     - run: npm run allure:history  
+     - run: npm run allure:ci     
+     - name: Setup Pages
+       uses: actions/configure-pages@v4
+     - name: Upload artifact
+       uses: actions/upload-pages-artifact@v3
+       with:
+         path: 'reports/allure-report'
+     - name: Deploy to GitHub Pages
+       id: deployment
+       uses: actions/deploy-pages@v4
+  notification:
+     if: always()
+     needs: [test]
+
+     environment:
+       name: github-pages
+       url: ${{ steps.deployment.outputs.page_url }}
+
+     runs-on: ubuntu-latest
+     steps:
+       - run: |
+           STATUS="${{ needs.test.result }}"
+           MESSAGE="Сборка ${{ github.run_number }}: $STATUS"
+           curl --request POST \
                --url https://api.telegram.org/bot${{secrets.TELEGRAM_TOKEN}}/sendMessage \
                --header 'Content-Type: application/json' \
                --data "{\"chat_id\": \"${{secrets.TELEGRAM_CHAT_ID}}\", \"text\": \"$MESSAGE\"}"
