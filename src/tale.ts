@@ -1,4 +1,4 @@
-function kolobok(name: any) {
+function kolobok(name: string) {
   switch (name) {
     case `лиса`:
       return `Меня съели`
@@ -11,7 +11,7 @@ function kolobok(name: any) {
   }
 }
 
-function newYear(name: any) {
+function newYear(name: string) {
   return `${name}! ${name}! ${name}!`
 }
 

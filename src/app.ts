@@ -3,6 +3,7 @@
  * @param {string} name
  * @returns {boolean}
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const nameIsValid = (name: any) => typeof name === 'string' && name.length >= 2 && /^[a-z]+$/.test(name)
 
 /**
@@ -11,6 +12,7 @@ export const nameIsValid = (name: any) => typeof name === 'string' && name.lengt
  * @param {string} text
  * @returns {string}
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fullTrim = (text: any) => (text ?? '').replace(/\s+/g, '')
 
 /**
